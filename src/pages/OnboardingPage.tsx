@@ -1,20 +1,33 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, Check, MapPin, GraduationCap, Heart, Zap, Clock, Wallet, Target, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check, MapPin, Heart, Clock, Wallet, Sparkles } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { useApp } from '@/context/AppContext';
 
 const TIME_OPTIONS = ['1–3 hrs/week', '3–5 hrs/week', '5–10 hrs/week', '10+ hrs/week'];
 const BUDGET_OPTIONS = ['Under ₹5,000', '₹5,000 – ₹20,000', '₹20,000 – ₹50,000', '₹50,000+'];
+const INTEREST_SUGGESTIONS = ['Food & wellness', 'Design', 'Technology', 'Community building', 'Education', 'Sustainability', 'Content & media', 'Fitness', 'Retail', 'Social impact'];
+import type { LucideIcon } from 'lucide-react';
 
-const STEPS = [
-  { key: 'location', label: 'Location', icon: MapPin, title: 'Where are you based?', subtitle: 'Your location shapes local market opportunities.', placeholder: 'e.g. Jaipur, India' },
-  { key: 'education', label: 'Education', icon: GraduationCap, title: 'What\'s your educational background?', subtitle: 'This helps us match ideas to your knowledge base.', placeholder: 'e.g. Undergraduate — Business Studies' },
-  { key: 'interests', label: 'Interests', icon: Heart, title: 'What are you interested in?', subtitle: 'Select all that resonate — we\'ll build around these.', type: 'tags', suggestions: ['Food & wellness', 'Design', 'Technology', 'Community building', 'Education', 'Sustainability', 'Content & media', 'Fitness', 'Retail', 'Social impact'] },
-  { key: 'skills', label: 'Skills', icon: Zap, title: 'What skills do you have?', subtitle: 'Pick the things you can already do reasonably well.', type: 'tags', suggestions: ['Communication', 'Social media', 'Basic design', 'Research', 'Writing', 'Coding', 'Teaching', 'Sales', 'Cooking', 'Photography', 'Event planning', 'Data analysis'] },
-  { key: 'availableTime', label: 'Time', icon: Clock, title: 'How much time can you commit?', subtitle: 'Be realistic — this filters out ideas that won\'t fit.', type: 'choice', options: TIME_OPTIONS },
-  { key: 'budget', label: 'Budget', icon: Wallet, title: 'What\'s your starting budget?', subtitle: 'Your budget determines what\'s feasible to start.', type: 'choice', options: BUDGET_OPTIONS },
-  { key: 'goals', label: 'Goals', icon: Target, title: 'What are you trying to achieve?', subtitle: 'Your goal shapes the kind of ideas we surface. This step is optional — skip it if you\'re not sure yet.', placeholder: 'e.g. Build a low-capital business I can run alongside my studies.', optional: true },
+type OnboardingKey = 'location' | 'interests' | 'availableTime' | 'budget';
+
+interface Step {
+  key: OnboardingKey;
+  label: string;
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+  type?: 'tags' | 'choice' | 'text';
+  placeholder?: string;
+  suggestions?: string[];
+  options?: string[];
+}
+
+const STEPS: Step[] = [
+  { key: 'location', label: 'Location', icon: MapPin, title: 'Where are you based?', subtitle: 'Your location shapes local market opportunities.', type: 'text', placeholder: 'e.g. Jaipur, India' },
+  { key: 'interests', label: 'Interests', icon: Heart, title: 'What are you interested in?', subtitle: "Select all that resonate — we'll build around these.", type: 'tags', suggestions: INTEREST_SUGGESTIONS },
+  { key: 'availableTime', label: 'Time', icon: Clock, title: 'How much time can you commit?', subtitle: "Be realistic — this filters out ideas that won't fit.", type: 'choice', options: TIME_OPTIONS },
+  { key: 'budget', label: 'Budget', icon: Wallet, title: "What's your starting budget?", subtitle: "Your budget determines what's feasible to start.", type: 'choice', options: BUDGET_OPTIONS },
 ];
 
 export default function OnboardingPage() {
@@ -38,7 +51,6 @@ export default function OnboardingPage() {
   };
 
   const canProceed = () => {
-    if (step.optional) return true;
     const val = localData[step.key as keyof typeof localData];
     if (Array.isArray(val)) return val.length > 0;
     return val && val.trim().length > 0;
@@ -50,9 +62,8 @@ export default function OnboardingPage() {
       setGenerating(true);
       const genMessages = [
         'Analyzing your location and local market…',
-        'Matching ideas to your skills and interests…',
+        'Matching ideas to your interests…',
         'Filtering by budget and available time…',
-        'Checking feasibility and competition…',
         'Building your personalized roadmap…',
       ];
       genMessages.forEach((_, i) => {
@@ -67,16 +78,11 @@ export default function OnboardingPage() {
     }
   };
 
-  const handleBack = () => {
-    if (stepIndex > 0) setStepIndex((i) => i - 1);
-  };
-
   if (generating) {
     const genMessages = [
       'Analyzing your location and local market…',
-      'Matching ideas to your skills and interests…',
+      'Matching ideas to your interests…',
       'Filtering by budget and available time…',
-      'Checking feasibility and competition…',
       'Building your personalized roadmap…',
     ];
     return (
@@ -97,9 +103,7 @@ export default function OnboardingPage() {
                 <div
                   key={msg}
                   className={`flex items-center gap-3 rounded-xl border px-4 py-3 transition-all duration-500 ${
-                    i <= genStep
-                      ? 'border-moss-200 bg-moss-50/40 opacity-100'
-                      : 'border-paper-200 bg-paper-50 opacity-40'
+                    i <= genStep ? 'border-moss-200 bg-moss-50/40 opacity-100' : 'border-paper-200 bg-paper-50 opacity-40'
                   }`}
                 >
                   {i < genStep ? (
@@ -109,9 +113,7 @@ export default function OnboardingPage() {
                   ) : (
                     <div className="h-4 w-4 shrink-0 rounded-full border-2 border-paper-300" />
                   )}
-                  <span className={`text-sm ${i <= genStep ? 'text-ink-700' : 'text-ink-300'}`}>
-                    {msg}
-                  </span>
+                  <span className={`text-sm ${i <= genStep ? 'text-ink-700' : 'text-ink-300'}`}>{msg}</span>
                 </div>
               ))}
             </div>
@@ -131,16 +133,11 @@ export default function OnboardingPage() {
         <div className="border-b border-paper-200 bg-paper-50/80 backdrop-blur-sm">
           <div className="container-editorial py-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-ink-500">
-                Step {stepIndex + 1} of {STEPS.length}
-              </p>
+              <p className="text-sm font-medium text-ink-500">Step {stepIndex + 1} of {STEPS.length}</p>
               <p className="text-xs uppercase tracking-[0.16em] text-ink-400">{step.label}</p>
             </div>
             <div className="mt-3 h-1 overflow-hidden rounded-full bg-paper-200">
-              <div
-                className="h-full rounded-full bg-moss-400 transition-all duration-500"
-                style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }}
-              />
+              <div className="h-full rounded-full bg-moss-400 transition-all duration-500" style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
             </div>
           </div>
         </div>
@@ -166,9 +163,7 @@ export default function OnboardingPage() {
                         key={tag}
                         onClick={() => toggleTag(tag)}
                         className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
-                          selected
-                            ? 'border-ink-800 bg-ink-800 text-paper-50'
-                            : 'border-paper-300 bg-paper-50 text-ink-600 hover:border-ink-300 hover:bg-paper-100'
+                          selected ? 'border-ink-800 bg-ink-800 text-paper-50' : 'border-paper-300 bg-paper-50 text-ink-600 hover:border-ink-300 hover:bg-paper-100'
                         }`}
                       >
                         {selected && <Check className="mr-1.5 inline h-3.5 w-3.5" strokeWidth={2} />}
@@ -188,9 +183,7 @@ export default function OnboardingPage() {
                         key={opt}
                         onClick={() => updateField(opt)}
                         className={`flex items-center justify-between rounded-xl border px-5 py-4 text-left text-sm font-medium transition-all duration-200 ${
-                          selected
-                            ? 'border-ink-800 bg-ink-800 text-paper-50'
-                            : 'border-paper-300 bg-paper-50 text-ink-600 hover:border-ink-300 hover:bg-paper-100'
+                          selected ? 'border-ink-800 bg-ink-800 text-paper-50' : 'border-paper-300 bg-paper-50 text-ink-600 hover:border-ink-300 hover:bg-paper-100'
                         }`}
                       >
                         {opt}
@@ -209,26 +202,16 @@ export default function OnboardingPage() {
                   onChange={(e) => updateField(e.target.value)}
                 />
               )}
-              {step.optional && (
-                <p className="mt-3 text-xs text-clay-500">Optional — you can continue without filling this in.</p>
-              )}
             </div>
 
             {/* Navigation */}
             <div className="mt-10 flex items-center justify-between">
-              <button
-                onClick={handleBack}
-                className={`btn-ghost ${stepIndex === 0 ? 'invisible' : ''}`}
-              >
+              <button onClick={() => stepIndex > 0 && setStepIndex((i) => i - 1)} className={`btn-ghost ${stepIndex === 0 ? 'invisible' : ''}`}>
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </button>
-              <button
-                onClick={handleNext}
-                disabled={!canProceed()}
-                className="btn-primary group disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                {isLast ? (step.optional && !canProceed() ? 'Skip & Generate' : 'Generate Ideas') : (step.optional && !canProceed() ? 'Skip' : 'Continue')}
+              <button onClick={handleNext} disabled={!canProceed()} className="btn-primary group disabled:cursor-not-allowed disabled:opacity-40">
+                {isLast ? 'Generate Ideas' : 'Continue'}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </button>
             </div>
