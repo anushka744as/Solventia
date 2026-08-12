@@ -18,9 +18,10 @@ export default function MarketCheckPage() {
 
   return (
     <AppShell>
-      <div className="container-editorial py-10">
+      <div className="container-editorial relative py-10">
+        <div className="pointer-events-none absolute -right-16 top-0 -z-0 h-64 w-64 rounded-full bg-slate-100/25 blur-3xl" />
         <div className="animate-fade-up">
-          <p className="eyebrow">Market Check</p>
+          <p className="eyebrow text-slate-500">Market Check</p>
           <h1 className="mt-2 font-serif text-3xl font-light tracking-tighter text-ink-800 sm:text-4xl">
             Feasibility analysis
           </h1>
@@ -32,7 +33,8 @@ export default function MarketCheckPage() {
         {/* Metrics */}
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {metrics.map((m) => (
-            <div key={m.label} className="card p-6">
+            <div key={m.label} className="card card-hover relative overflow-hidden p-6">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-moss-100/30 blur-2xl" />
               <div className="flex items-center justify-between">
                 <m.icon className="h-5 w-5 text-moss-500" strokeWidth={1.25} />
                 <span className={`text-sm font-medium ${
@@ -49,8 +51,9 @@ export default function MarketCheckPage() {
 
         {/* Analysis */}
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <div className="card p-7">
-            <h3 className="font-serif text-lg font-medium text-ink-800">Demand vs. Competition</h3>
+          <div className="card relative overflow-hidden p-7">
+            <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-moss-100/30 blur-3xl" />
+            <h3 className="relative font-serif text-lg font-medium text-ink-800">Demand vs. Competition</h3>
             <div className="mt-5 space-y-5">
               <div>
                 <div className="flex items-center justify-between text-sm">
@@ -81,8 +84,9 @@ export default function MarketCheckPage() {
             </div>
           </div>
 
-          <div className="card p-7">
-            <h3 className="font-serif text-lg font-medium text-ink-800">Market Summary</h3>
+          <div className="card relative overflow-hidden p-7">
+            <div className="pointer-events-none absolute -left-12 -bottom-12 h-36 w-36 rounded-full bg-clay-100/25 blur-3xl" />
+            <h3 className="relative font-serif text-lg font-medium text-ink-800">Market Summary</h3>
             <p className="mt-3 text-sm leading-relaxed text-ink-500">{idea.marketSummary}</p>
             <div className="mt-5">
               <p className="text-xs uppercase tracking-[0.15em] text-ink-400">Existing players</p>

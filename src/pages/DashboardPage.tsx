@@ -44,15 +44,16 @@ export default function DashboardPage() {
         {/* Recommended idea + next step */}
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="rounded-2xl border border-paper-300 bg-paper-50 p-7 shadow-[0_2px_24px_-12px_rgba(31,29,26,0.1)]">
+            <div className="relative overflow-hidden rounded-2xl border border-paper-300 bg-gradient-to-br from-paper-50 via-paper-50 to-moss-50/40 p-7 shadow-[0_2px_24px_-12px_rgba(31,29,26,0.1)]">
+              <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-moss-100/45 blur-3xl" />
               <div className="flex items-center justify-between">
                 <p className="text-xs uppercase tracking-[0.16em] text-ink-400">Recommended Idea</p>
                 <span className="chip border-moss-200 bg-moss-50/50 text-moss-600">
                   <CheckCircle2 className="h-3 w-3" /> Best fit
                 </span>
               </div>
-              <h2 className="mt-3 font-serif text-2xl font-medium text-ink-800">{recommended.title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-ink-500">{recommended.description}</p>
+              <h2 className="relative mt-3 font-serif text-2xl font-medium text-ink-800">{recommended.title}</h2>
+              <p className="relative mt-2 text-sm leading-relaxed text-ink-500">{recommended.description}</p>
 
               <div className="mt-5 grid grid-cols-3 gap-3">
                 {[
@@ -82,9 +83,10 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <div className="rounded-2xl border border-moss-200 bg-moss-50/40 p-6">
-              <p className="text-xs uppercase tracking-[0.16em] text-moss-600">Next Step</p>
-              <p className="mt-2 font-serif text-lg font-medium text-ink-800">
+            <div className="relative overflow-hidden rounded-2xl border border-moss-200 bg-gradient-to-br from-moss-50/80 to-slate-50/60 p-6">
+              <div className="pointer-events-none absolute -bottom-10 -right-8 h-32 w-32 rounded-full bg-slate-200/50 blur-2xl" />
+              <p className="relative text-xs uppercase tracking-[0.16em] text-moss-600">Next Step</p>
+              <p className="relative mt-2 font-serif text-lg font-medium text-ink-800">
                 Interview 5 potential customers
               </p>
               <p className="mt-2 text-sm leading-relaxed text-ink-500">

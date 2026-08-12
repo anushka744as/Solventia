@@ -21,9 +21,10 @@ export default function IdeasPage() {
 
   return (
     <AppShell>
-      <div className="container-editorial py-10">
+      <div className="container-editorial relative py-10">
+        <div className="pointer-events-none absolute -right-20 top-0 -z-0 h-72 w-72 rounded-full bg-clay-100/25 blur-3xl" />
         <div className="animate-fade-up">
-          <p className="eyebrow">Discover</p>
+          <p className="eyebrow text-clay-600">Discover</p>
           <h1 className="mt-2 font-serif text-3xl font-light tracking-tighter text-ink-800 sm:text-4xl">
             Business ideas shaped around you
           </h1>
@@ -75,7 +76,14 @@ export default function IdeasPage() {
                 style={{ animationDelay: `${i * 0.05}s` }}
               >
                 <div className="flex items-start justify-between">
-                  <span className="chip">{idea.category}</span>
+                  <span className="chip" style={{
+                    background: idea.category === 'Food & Beverage' ? 'linear-gradient(to right, #eef6ed, #d6ebd3)'
+                      : idea.category === 'Services' ? 'linear-gradient(to right, #fbf3ee, #f5e1d4)'
+                      : idea.category === 'Education' ? 'linear-gradient(to right, #f0f4f6, #dbe5ea)'
+                      : idea.category === 'Technology' ? 'linear-gradient(to right, #eef6ed, #f0f4f6)'
+                      : idea.category === 'Retail' ? 'linear-gradient(to right, #fbf3ee, #eef6ed)'
+                      : 'linear-gradient(to right, #f0f4f6, #fbf3ee)',
+                  }}>{idea.category}</span>
                   <button
                     onClick={() => toggleShortlist(idea.id)}
                     className={`rounded-lg p-1.5 transition-colors ${
@@ -103,7 +111,7 @@ export default function IdeasPage() {
                     <span className="font-medium text-ink-700">{idea.feasibility}%</span>
                   </div>
                   <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-paper-200">
-                    <div className="h-full rounded-full bg-moss-400" style={{ width: `${idea.feasibility}%` }} />
+                    <div className="h-full rounded-full bg-gradient-to-r from-moss-400 to-clay-400" style={{ width: `${idea.feasibility}%` }} />
                   </div>
                 </div>
 

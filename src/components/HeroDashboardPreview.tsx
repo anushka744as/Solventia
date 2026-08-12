@@ -6,7 +6,7 @@ export default function HeroDashboardPreview() {
       {/* Subtle ambient glow */}
       <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-moss-100/40 via-clay-50/30 to-slate-100/25 blur-2xl" />
 
-      <div className="rounded-2xl border border-paper-300 bg-paper-50 shadow-[0_8px_40px_-16px_rgba(31,29,26,0.12)]">
+      <div className="overflow-hidden rounded-2xl border border-paper-300 bg-paper-50 shadow-[0_8px_40px_-16px_rgba(31,29,26,0.12)]">
         {/* Window chrome */}
         <div className="flex items-center gap-2 border-b border-paper-200 px-5 py-3.5">
           <span className="h-2.5 w-2.5 rounded-full bg-clay-300" />
@@ -16,9 +16,11 @@ export default function HeroDashboardPreview() {
         </div>
 
         {/* Greeting */}
-        <div className="px-6 pt-6 pb-4">
-          <p className="font-serif text-lg font-light text-ink-700">Good afternoon, Saksham.</p>
-          <p className="mt-0.5 text-xs uppercase tracking-[0.18em] text-ink-400">Your Venture Snapshot</p>
+        <div className="relative overflow-hidden px-6 pt-6 pb-4">
+          <div className="absolute -right-8 -top-12 h-32 w-32 rounded-full bg-moss-100/60 blur-2xl" />
+          <div className="absolute right-8 top-5 h-2 w-2 rounded-full bg-clay-400" />
+          <p className="relative font-serif text-lg font-light text-ink-700">Good afternoon, Saksham.</p>
+          <p className="relative mt-0.5 text-xs uppercase tracking-[0.18em] text-ink-400">Your Venture Snapshot</p>
         </div>
 
         {/* Stats */}
@@ -28,7 +30,7 @@ export default function HeroDashboardPreview() {
             { label: 'Shortlisted', value: '3' },
             { label: 'Roadmap Progress', value: '42%' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-paper-50 px-5 py-4">
+            <div key={stat.label} className="bg-paper-50 px-5 py-4 transition-colors hover:bg-moss-50/30">
               <p className="text-[11px] uppercase tracking-[0.15em] text-ink-400">{stat.label}</p>
               <p className="mt-1.5 font-serif text-2xl font-light text-ink-800">{stat.value}</p>
             </div>
@@ -48,7 +50,7 @@ export default function HeroDashboardPreview() {
               { icon: Wallet, label: 'Budget', value: '₹5K–₹20K' },
               { icon: Clock, label: 'Time', value: '5–10 hrs/week' },
             ].map((m) => (
-              <div key={m.label} className="rounded-xl border border-paper-200 bg-paper-100/60 px-3 py-3">
+              <div key={m.label} className="rounded-xl border border-paper-200 bg-gradient-to-br from-paper-100/80 to-moss-50/20 px-3 py-3 transition-colors hover:border-moss-200">
                 <m.icon className="h-3.5 w-3.5 text-moss-500" strokeWidth={1.5} />
                 <p className="mt-2 text-[10px] uppercase tracking-[0.12em] text-ink-400">{m.label}</p>
                 <p className="mt-0.5 text-sm font-medium text-ink-700">{m.value}</p>
@@ -76,7 +78,7 @@ export default function HeroDashboardPreview() {
             </div>
           </div>
 
-          <button className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-moss-600 py-2.5 text-xs font-medium text-paper-50 transition-colors hover:bg-moss-700">
+          <button className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-moss-600 to-moss-500 py-2.5 text-xs font-medium text-paper-50 transition-all hover:from-moss-700 hover:to-moss-600 hover:shadow-lg hover:shadow-moss-700/20">
             View full dashboard <ArrowRight className="h-3.5 w-3.5" />
           </button>
         </div>

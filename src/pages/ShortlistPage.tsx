@@ -9,9 +9,10 @@ export default function ShortlistPage() {
 
   return (
     <AppShell>
-      <div className="container-editorial py-10">
+      <div className="container-editorial relative py-10">
+        <div className="pointer-events-none absolute -left-20 top-0 -z-0 h-72 w-72 rounded-full bg-moss-100/25 blur-3xl" />
         <div className="animate-fade-up">
-          <p className="eyebrow">Shortlist</p>
+          <p className="eyebrow text-moss-600">Shortlist</p>
           <h1 className="mt-2 font-serif text-3xl font-light tracking-tighter text-ink-800 sm:text-4xl">
             Ideas you've saved
           </h1>
@@ -22,7 +23,7 @@ export default function ShortlistPage() {
         </div>
 
         {saved.length === 0 ? (
-          <div className="mt-12 rounded-2xl border border-dashed border-paper-300 bg-paper-100/30 py-20 text-center">
+          <div className="mt-12 rounded-2xl border border-dashed border-paper-300 bg-gradient-to-br from-paper-100/40 to-moss-50/20 py-20 text-center">
             <Bookmark className="mx-auto h-8 w-8 text-ink-300" strokeWidth={1.25} />
             <h3 className="mt-4 font-serif text-xl font-light text-ink-700">No ideas shortlisted yet</h3>
             <p className="mt-2 text-sm text-ink-400">Explore ideas and save the ones that resonate.</p>
@@ -33,7 +34,8 @@ export default function ShortlistPage() {
         ) : (
           <div className="mt-8 space-y-4">
             {saved.map((idea) => (
-              <div key={idea.id} className="card card-hover flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <div key={idea.id} className="card card-hover relative flex flex-col gap-4 overflow-hidden p-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-clay-100/20 blur-2xl" />
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
                     <span className="chip">{idea.category}</span>

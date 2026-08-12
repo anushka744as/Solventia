@@ -36,7 +36,8 @@ export default function IdeaDetailPage() {
 
   return (
     <AppShell>
-      <div className="container-editorial py-10">
+      <div className="container-editorial relative py-10">
+        <div className="pointer-events-none absolute -left-20 top-0 -z-0 h-72 w-72 rounded-full bg-moss-100/20 blur-3xl" />
         <Link to="/ideas" className="btn-ghost mb-6">
           <ArrowLeft className="h-4 w-4" /> Back to ideas
         </Link>
@@ -89,7 +90,8 @@ export default function IdeaDetailPage() {
           {/* Sidebar */}
           <div className="lg:col-span-4">
             <div className="sticky top-24 space-y-4">
-              <div className="rounded-2xl border border-paper-300 bg-paper-50 p-6 shadow-[0_2px_24px_-12px_rgba(31,29,26,0.1)]">
+              <div className="relative overflow-hidden rounded-2xl border border-paper-300 bg-gradient-to-br from-paper-50 to-slate-50/30 p-6 shadow-[0_2px_24px_-12px_rgba(31,29,26,0.1)]">
+                <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-moss-100/30 blur-2xl" />
                 <p className="text-xs uppercase tracking-[0.16em] text-ink-400">At a glance</p>
                 <div className="mt-4 space-y-4">
                   {metrics.map((m) => (
@@ -103,7 +105,7 @@ export default function IdeaDetailPage() {
                   ))}
                 </div>
 
-                <div className="mt-5 space-y-2.5 border-t border-paper-200 pt-4">
+                <div className="relative mt-5 space-y-2.5 border-t border-paper-200 pt-4">
                   {[
                     { label: 'Competition', value: idea.competition, color: 'text-slate-500' },
                     { label: 'Demand', value: idea.demand, color: 'text-moss-500' },

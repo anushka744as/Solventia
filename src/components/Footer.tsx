@@ -10,8 +10,10 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-paper-200 bg-paper-100">
-      <div className="container-editorial py-14">
+    <footer className="relative overflow-hidden border-t border-paper-200 bg-gradient-to-br from-paper-100 via-paper-100 to-moss-50/40">
+      <div className="pointer-events-none absolute -right-20 top-10 h-64 w-64 rounded-full bg-clay-100/30 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 bottom-0 h-56 w-56 rounded-full bg-slate-100/40 blur-3xl" />
+      <div className="container-editorial relative py-14">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <Logo showTagline />
@@ -22,7 +24,7 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-3">
-            <p className="eyebrow mb-4">Explore</p>
+            <p className="eyebrow mb-4 text-moss-600">Explore</p>
             <ul className="space-y-2.5">
               {footerLinks.map((link) => (
                 <li key={link.label}>
@@ -38,7 +40,7 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-4">
-            <p className="eyebrow mb-4">Project</p>
+            <p className="eyebrow mb-4 text-clay-600">Project</p>
             <p className="text-sm text-ink-500">Athena Education — Minerva Tech Capstone</p>
             <p className="mt-3 text-sm text-ink-500">
               Scholar: <span className="text-ink-700">Saksham</span>

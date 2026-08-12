@@ -128,24 +128,26 @@ export default function OnboardingPage() {
 
   return (
     <Layout showFooter={false}>
-      <div className="flex min-h-screen flex-col pt-16">
+      <div className="relative flex min-h-screen flex-col overflow-hidden pt-16">
+        <div className="pointer-events-none absolute right-0 top-16 -z-0 h-80 w-80 rounded-full bg-moss-100/20 blur-3xl" />
+        <div className="pointer-events-none absolute left-0 bottom-0 -z-0 h-72 w-72 rounded-full bg-clay-100/15 blur-3xl" />
         {/* Progress bar */}
-        <div className="border-b border-paper-200 bg-paper-50/80 backdrop-blur-sm">
+        <div className="relative z-10 border-b border-paper-200 bg-paper-50/80 backdrop-blur-sm">
           <div className="container-editorial py-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium text-ink-500">Step {stepIndex + 1} of {STEPS.length}</p>
               <p className="text-xs uppercase tracking-[0.16em] text-ink-400">{step.label}</p>
             </div>
             <div className="mt-3 h-1 overflow-hidden rounded-full bg-paper-200">
-              <div className="h-full rounded-full bg-moss-400 transition-all duration-500" style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
+              <div className="h-full rounded-full bg-gradient-to-r from-moss-400 via-clay-400 to-slate-400 transition-all duration-500" style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
             </div>
           </div>
         </div>
 
         {/* Step content */}
-        <div className="flex flex-1 items-center justify-center py-12">
+        <div className="relative z-10 flex flex-1 items-center justify-center py-12">
           <div className="container-editorial max-w-2xl">
-            <div className="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-moss-200 bg-moss-50/50">
+            <div className="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-moss-200 bg-gradient-to-br from-moss-50 to-clay-50">
               <StepIcon className="h-6 w-6 text-moss-600" strokeWidth={1.25} />
             </div>
             <h1 className="font-serif text-3xl font-light leading-tight tracking-tighter text-ink-800 text-balance sm:text-4xl">

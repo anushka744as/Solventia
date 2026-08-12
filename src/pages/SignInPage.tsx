@@ -19,10 +19,12 @@ export default function SignInPage() {
 
   return (
     <Layout showFooter={false}>
-      <div className="flex min-h-screen flex-col items-center justify-center px-6 pt-16">
-        <div className="w-full max-w-sm">
+      <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-16">
+        <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-moss-100/25 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-clay-100/25 blur-3xl" />
+        <div className="relative z-10 w-full max-w-sm rounded-3xl border border-paper-200 bg-paper-50/70 p-8 shadow-[0_8px_40px_-20px_rgba(31,29,26,0.18)] backdrop-blur-sm">
           <div className="animate-fade-up text-center">
-            <p className="eyebrow">Welcome back</p>
+            <p className="eyebrow text-moss-600">Welcome back</p>
             <h1 className="mt-3 font-serif text-3xl font-light tracking-tighter text-ink-800">
               Sign in to Solventia
             </h1>

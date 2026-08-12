@@ -15,9 +15,10 @@ export default function RoadmapPage() {
 
   return (
     <AppShell>
-      <div className="container-editorial py-10">
+      <div className="container-editorial relative py-10">
+        <div className="pointer-events-none absolute -right-20 top-0 -z-0 h-72 w-72 rounded-full bg-moss-100/20 blur-3xl" />
         <div className="animate-fade-up">
-          <p className="eyebrow">Roadmap</p>
+          <p className="eyebrow text-moss-600">Roadmap</p>
           <h1 className="mt-2 font-serif text-3xl font-light tracking-tighter text-ink-800 sm:text-4xl">
             Your path for {idea.title}
           </h1>
@@ -27,7 +28,8 @@ export default function RoadmapPage() {
         </div>
 
         {/* Progress */}
-        <div className="mt-8 rounded-2xl border border-paper-300 bg-paper-50 p-7">
+        <div className="relative mt-8 overflow-hidden rounded-2xl border border-paper-300 bg-gradient-to-br from-paper-50 via-paper-50 to-moss-50/30 p-7">
+          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-moss-100/40 blur-3xl" />
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.16em] text-ink-400">Overall progress</p>
@@ -40,8 +42,8 @@ export default function RoadmapPage() {
               </p>
             </div>
           </div>
-          <div className="mt-4 h-2 overflow-hidden rounded-full bg-paper-200">
-            <div className="h-full rounded-full bg-moss-400 transition-all duration-700" style={{ width: `${roadmapProgress}%` }} />
+          <div className="relative mt-4 h-2 overflow-hidden rounded-full bg-paper-200">
+            <div className="h-full rounded-full bg-gradient-to-r from-moss-400 via-moss-500 to-slate-400 transition-all duration-700" style={{ width: `${roadmapProgress}%` }} />
           </div>
         </div>
 

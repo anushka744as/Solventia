@@ -26,7 +26,9 @@ export default function AppShell({ children, showFooter = true }: AppShellProps)
   return (
     <div className="flex min-h-screen flex-col bg-paper-50">
       <Navbar />
-      <div className="flex flex-1 pt-16">
+      <div className="relative flex flex-1 overflow-hidden pt-16">
+        <div className="pointer-events-none absolute right-0 top-16 -z-0 h-80 w-80 rounded-full bg-moss-100/20 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 left-1/3 -z-0 h-72 w-72 rounded-full bg-clay-100/15 blur-3xl" />
         {/* Sidebar */}
         <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-64 shrink-0 border-r border-paper-200 bg-paper-100/40 lg:block">
           <div className="flex h-full flex-col">
@@ -71,7 +73,7 @@ export default function AppShell({ children, showFooter = true }: AppShellProps)
 
         {/* Main content */}
         <div className="flex flex-1 flex-col min-w-0">
-          <main className="flex-1">{children}</main>
+          <main className="relative z-10 flex-1">{children}</main>
           {showFooter && <Footer />}
         </div>
       </div>
