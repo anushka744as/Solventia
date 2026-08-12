@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, TrendingUp, Users, Wallet, AlertTriangle, CheckCircle2, Target } from 'lucide-react';
+import { ArrowRight, Users, Wallet, TrendingUp, CheckCircle2, AlertTriangle, Target } from 'lucide-react';
 import AppShell from '@/components/AppShell';
 import { useApp } from '@/context/AppContext';
 
@@ -22,14 +22,14 @@ export default function MarketCheckPage() {
         <div className="animate-fade-up">
           <p className="eyebrow">Market Check</p>
           <h1 className="mt-2 font-serif text-3xl font-light tracking-tighter text-ink-800 sm:text-4xl">
-            Feasibility analysis for {idea.title}
+            Feasibility analysis
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-500">
             A reality check on competition, demand and cost — before you commit time and money.
           </p>
         </div>
 
-        {/* Key metrics */}
+        {/* Metrics */}
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {metrics.map((m) => (
             <div key={m.label} className="card p-6">
@@ -47,13 +47,11 @@ export default function MarketCheckPage() {
           ))}
         </div>
 
-        {/* Visual comparison bars */}
+        {/* Analysis */}
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="card p-7">
             <h3 className="font-serif text-lg font-medium text-ink-800">Demand vs. Competition</h3>
-            <p className="mt-1.5 text-sm text-ink-400">Relative signal strength in your local market</p>
-
-            <div className="mt-6 space-y-5">
+            <div className="mt-5 space-y-5">
               <div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-ink-600">Demand</span>
@@ -73,7 +71,6 @@ export default function MarketCheckPage() {
                 </div>
               </div>
             </div>
-
             <div className="mt-6 rounded-xl border border-moss-200 bg-moss-50/40 px-5 py-4">
               <p className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-600">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-moss-500" strokeWidth={1.5} />
@@ -87,7 +84,6 @@ export default function MarketCheckPage() {
           <div className="card p-7">
             <h3 className="font-serif text-lg font-medium text-ink-800">Market Summary</h3>
             <p className="mt-3 text-sm leading-relaxed text-ink-500">{idea.marketSummary}</p>
-
             <div className="mt-5">
               <p className="text-xs uppercase tracking-[0.15em] text-ink-400">Existing players</p>
               <div className="mt-3 space-y-2.5">
@@ -102,7 +98,7 @@ export default function MarketCheckPage() {
           </div>
         </div>
 
-        {/* Gaps & risks */}
+        {/* Gaps & Risks */}
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="card p-7">
             <div className="flex items-center gap-2">

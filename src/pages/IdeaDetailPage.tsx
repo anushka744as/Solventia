@@ -1,5 +1,5 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, TrendingUp, Wallet, Clock, Bookmark, BookmarkCheck, BarChart3, Route, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, TrendingUp, Wallet, Clock, Bookmark, BookmarkCheck, BarChart3 } from 'lucide-react';
 import AppShell from '@/components/AppShell';
 import { useApp } from '@/context/AppContext';
 
@@ -28,16 +28,21 @@ export default function IdeaDetailPage() {
     navigate('/roadmap');
   };
 
+  const metrics = [
+    { icon: TrendingUp, label: 'Feasibility', value: `${idea.feasibility}%` },
+    { icon: Wallet, label: 'Budget', value: idea.budgetRange },
+    { icon: Clock, label: 'Time', value: idea.timeCommitment },
+  ];
+
   return (
     <AppShell>
       <div className="container-editorial py-10">
-        {/* Breadcrumb */}
         <Link to="/ideas" className="btn-ghost mb-6">
           <ArrowLeft className="h-4 w-4" /> Back to ideas
         </Link>
 
-        {/* Header */}
         <div className="grid gap-8 lg:grid-cols-12">
+          {/* Main content */}
           <div className="lg:col-span-8">
             <div className="animate-fade-up">
               <span className="chip">{idea.category}</span>
@@ -55,7 +60,7 @@ export default function IdeaDetailPage() {
               <ul className="mt-4 space-y-3">
                 {idea.whyItFits.map((reason) => (
                   <li key={reason} className="flex items-start gap-3 text-sm leading-relaxed text-ink-600">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-moss-500" strokeWidth={2} />
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-moss-400" />
                     {reason}
                   </li>
                 ))}
@@ -63,7 +68,7 @@ export default function IdeaDetailPage() {
             </div>
 
             {/* Market summary */}
-            <div className="mt-10 rounded-2xl border border-paper-200 bg-paper-100/40 p-6">
+            <div className="mt-8 rounded-2xl border border-paper-200 bg-paper-100/40 p-6">
               <p className="text-xs uppercase tracking-[0.16em] text-ink-400">Market Summary</p>
               <p className="mt-3 text-sm leading-relaxed text-ink-600">{idea.marketSummary}</p>
             </div>
@@ -84,15 +89,10 @@ export default function IdeaDetailPage() {
           {/* Sidebar */}
           <div className="lg:col-span-4">
             <div className="sticky top-24 space-y-4">
-              {/* Key metrics */}
               <div className="rounded-2xl border border-paper-300 bg-paper-50 p-6 shadow-[0_2px_24px_-12px_rgba(31,29,26,0.1)]">
                 <p className="text-xs uppercase tracking-[0.16em] text-ink-400">At a glance</p>
                 <div className="mt-4 space-y-4">
-                  {[
-                    { icon: TrendingUp, label: 'Feasibility', value: `${idea.feasibility}%` },
-                    { icon: Wallet, label: 'Budget', value: idea.budgetRange },
-                    { icon: Clock, label: 'Time', value: idea.timeCommitment },
-                  ].map((m) => (
+                  {metrics.map((m) => (
                     <div key={m.label} className="flex items-center justify-between">
                       <span className="flex items-center gap-2.5 text-sm text-ink-500">
                         <m.icon className="h-4 w-4 text-moss-500" strokeWidth={1.5} />
@@ -103,23 +103,20 @@ export default function IdeaDetailPage() {
                   ))}
                 </div>
 
-                <div className="mt-5 border-t border-paper-200 pt-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-ink-500">Competition</span>
-                    <span className="text-sm font-medium text-slate-500">{idea.competition}</span>
-                  </div>
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm text-ink-500">Demand</span>
-                    <span className="text-sm font-medium text-moss-500">{idea.demand}</span>
-                  </div>
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm text-ink-500">Initial cost</span>
-                    <span className="text-sm font-medium text-moss-500">{idea.initialCost}</span>
-                  </div>
+                <div className="mt-5 space-y-2.5 border-t border-paper-200 pt-4">
+                  {[
+                    { label: 'Competition', value: idea.competition, color: 'text-slate-500' },
+                    { label: 'Demand', value: idea.demand, color: 'text-moss-500' },
+                    { label: 'Initial cost', value: idea.initialCost, color: 'text-moss-500' },
+                  ].map((row) => (
+                    <div key={row.label} className="flex items-center justify-between">
+                      <span className="text-sm text-ink-500">{row.label}</span>
+                      <span className={`text-sm font-medium ${row.color}`}>{row.value}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Actions */}
               <div className="space-y-2.5">
                 <button onClick={handleSelectAndBuild} className="btn-primary w-full group">
                   Build Roadmap
@@ -127,7 +124,7 @@ export default function IdeaDetailPage() {
                 </button>
                 <Link to="/market-check" className="btn-secondary w-full">
                   <BarChart3 className="h-4 w-4" />
-                  View Market Check
+                  Market Check
                 </Link>
                 <button
                   onClick={() => toggleShortlist(idea.id)}

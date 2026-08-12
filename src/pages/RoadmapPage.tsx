@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
-import { Check, Circle, Clock, ArrowRight, BookOpen, Plus, Minus } from 'lucide-react';
+import { Check, Circle, Clock, ArrowRight, BookOpen } from 'lucide-react';
 import AppShell from '@/components/AppShell';
 import { useApp } from '@/context/AppContext';
+
+const statusStyles = {
+  done: { ring: 'border-moss-400 bg-moss-400', label: 'Done', labelColor: 'text-moss-600' },
+  'in-progress': { ring: 'border-ink-400 bg-ink-400', label: 'In progress', labelColor: 'text-ink-700' },
+  todo: { ring: 'border-paper-300 bg-transparent', label: 'To do', labelColor: 'text-ink-400' },
+} as const;
 
 export default function RoadmapPage() {
   const { roadmap, toggleRoadmapStep, roadmapProgress, ideas, selectedIdeaId } = useApp();
   const idea = ideas.find((i) => i.id === selectedIdeaId) || ideas[0];
-
-  const statusStyles = {
-    done: { ring: 'border-moss-400 bg-moss-400', text: 'text-moss-600', bg: 'bg-moss-50/40', label: 'Done' },
-    'in-progress': { ring: 'border-ink-400 bg-ink-400', text: 'text-ink-700', bg: 'bg-paper-100/60', label: 'In progress' },
-    todo: { ring: 'border-paper-300 bg-transparent', text: 'text-ink-400', bg: 'bg-paper-50', label: 'To do' },
-  };
 
   return (
     <AppShell>
@@ -22,19 +22,18 @@ export default function RoadmapPage() {
             Your path for {idea.title}
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-500">
-            A practical, step-by-step plan. Click any step to update its status and track your
-            progress.
+            A practical, step-by-step plan. Click any step to update its status.
           </p>
         </div>
 
-        {/* Progress overview */}
+        {/* Progress */}
         <div className="mt-8 rounded-2xl border border-paper-300 bg-paper-50 p-7">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.16em] text-ink-400">Overall progress</p>
               <p className="mt-1 font-serif text-3xl font-light text-ink-800">{roadmapProgress}%</p>
             </div>
-            <div className="hidden text-right sm:block">
+            <div className="text-right">
               <p className="text-xs uppercase tracking-[0.16em] text-ink-400">Steps</p>
               <p className="mt-1 font-serif text-3xl font-light text-ink-800">
                 {roadmap.filter((s) => s.status === 'done').length}/{roadmap.length}
@@ -49,18 +48,15 @@ export default function RoadmapPage() {
         {/* Timeline */}
         <div className="mt-10">
           <div className="relative">
-            {/* Vertical line */}
             <div className="absolute left-[1.625rem] top-0 bottom-0 w-px bg-paper-200" />
-
-            <div className="space-y-6">
-              {roadmap.map((step, i) => {
+            <div className="space-y-5">
+              {roadmap.map((step) => {
                 const style = statusStyles[step.status];
                 return (
                   <div key={step.id} className="relative flex gap-5">
-                    {/* Node */}
                     <button
                       onClick={() => toggleRoadmapStep(step.id)}
-                      className={`relative z-10 grid h-13 w-13 shrink-0 place-items-center rounded-full border-2 transition-all duration-300 ${style.ring} hover:scale-105`}
+                      className={`relative z-10 grid h-13 w-13 shrink-0 place-items-center rounded-full border-2 transition-all duration-300 hover:scale-105 ${style.ring}`}
                       style={{ width: '3.25rem', height: '3.25rem' }}
                       aria-label="Toggle step status"
                     >
@@ -73,54 +69,41 @@ export default function RoadmapPage() {
                       )}
                     </button>
 
-                    {/* Content */}
-                    <div className={`flex-1 rounded-2xl border p-6 transition-all duration-300 ${step.status === 'done' ? 'border-paper-200 bg-paper-100/30 opacity-75' : 'border-paper-300 bg-paper-50'} ${style.bg}`}>
+                    <div className={`flex-1 rounded-2xl border p-5 transition-all duration-300 ${
+                      step.status === 'done'
+                        ? 'border-paper-200 bg-paper-100/30 opacity-75'
+                        : 'border-paper-300 bg-paper-50'
+                    }`}>
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-[11px] uppercase tracking-[0.16em] text-ink-400">
-                            {step.phase}
-                          </p>
-                          <h3 className={`mt-1 font-serif text-lg font-medium ${step.status === 'done' ? 'text-ink-500' : 'text-ink-800'}`}>
+                          <p className="text-[11px] uppercase tracking-[0.16em] text-ink-400">{step.phase}</p>
+                          <h3 className={`mt-1 font-serif text-lg font-medium ${
+                            step.status === 'done' ? 'text-ink-500' : 'text-ink-800'
+                          }`}>
                             {step.title}
                           </h3>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className={`chip ${style.text} border-paper-200`}>
-                            {style.label}
-                          </span>
-                          <span className="chip text-ink-400">
-                            <Clock className="h-3 w-3" /> {step.duration}
-                          </span>
+                        <div className="flex shrink-0 items-center gap-2">
+                          <span className={`chip ${style.labelColor}`}>{style.label}</span>
+                          <span className="chip text-ink-400"><Clock className="h-3 w-3" /> {step.duration}</span>
                         </div>
                       </div>
 
-                      <p className={`mt-3 text-sm leading-relaxed ${step.status === 'done' ? 'text-ink-400' : 'text-ink-500'}`}>
+                      <p className={`mt-2.5 text-sm leading-relaxed ${
+                        step.status === 'done' ? 'text-ink-400' : 'text-ink-500'
+                      }`}>
                         {step.description}
                       </p>
 
                       {step.resources.length > 0 && (
-                        <div className="mt-4">
-                          <p className="text-[11px] uppercase tracking-[0.14em] text-ink-400">Resources</p>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {step.resources.map((res) => (
-                              <span key={res} className="inline-flex items-center gap-1.5 rounded-lg border border-paper-200 bg-paper-100/50 px-3 py-1.5 text-xs text-ink-500">
-                                <BookOpen className="h-3 w-3" /> {res}
-                              </span>
-                            ))}
-                          </div>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {step.resources.map((res) => (
+                            <span key={res} className="inline-flex items-center gap-1.5 rounded-lg border border-paper-200 bg-paper-100/50 px-3 py-1.5 text-xs text-ink-500">
+                              <BookOpen className="h-3 w-3" /> {res}
+                            </span>
+                          ))}
                         </div>
                       )}
-
-                      {/* Toggle hint */}
-                      <div className="mt-4 flex items-center gap-2 text-xs text-ink-300">
-                        {step.status === 'done' ? (
-                          <><Minus className="h-3 w-3" /> Click to mark as not done</>
-                        ) : step.status === 'in-progress' ? (
-                          <><Plus className="h-3 w-3" /> Click to mark as done</>
-                        ) : (
-                          <><Plus className="h-3 w-3" /> Click to start this step</>
-                        )}
-                      </div>
                     </div>
                   </div>
                 );

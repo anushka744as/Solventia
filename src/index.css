@@ -63,8 +63,4 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  .shimmer-bg {
-    background: linear-gradient(90deg, transparent 0%, rgba(77, 122, 71, 0.08) 50%, transparent 100%);
-    background-size: 200% 100%;
-  }
 }
